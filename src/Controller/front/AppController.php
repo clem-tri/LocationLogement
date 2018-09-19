@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller\front;
+namespace App\Controller\Front;
 
+use App\Controller\Api\LogementController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AppController extends AbstractController
 {
+    /**
+     * @Route("/", name="home")
+     */
     public function index()
     {
         return $this->render('app/index.html.twig', [
@@ -17,10 +21,11 @@ class AppController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/map", name="map")
+     */
     public function map(Request $request): Response
     {
-        return $this->render('map.html.twig', [
-            //'name' => $request->get('name', 'World')
-        ]);
+        return $this->render('map.html.twig', []);
     }
 }

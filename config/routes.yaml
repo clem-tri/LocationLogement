@@ -1,7 +1,9 @@
-index:
-    path: /
-    defaults: { _controller: 'App\Controller\front\AppController::index' }
-
-map:
-    path: /map
-    defaults: { _controller: 'App\Controller\front\AppController::map' }    
+#index:
+##    path: /
+##    defaults: { _controller: 'App\Controller\front\AppController::index' }
+##
+##map:
+##    path: /map
+##    defaults: { _controller: 'App\Controller\front\AppController::map' }
+##logout:
+##    path: /logout

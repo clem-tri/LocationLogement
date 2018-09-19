@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\api;
+namespace App\Controller\Api;
 
 use App\Entity\Logement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
