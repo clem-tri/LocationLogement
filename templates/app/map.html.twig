@@ -3,14 +3,19 @@
 {% block body %}
 <body>
 
+<div class="container-fluid">
+   <div class="row">
+      <div id="mapid" class="col"></div>
+      <div class="col" id="dates"></div>
+   </div>
 
-<div id="mapid"></div>
+</div>
 
 
    <script type="application/javascript">
        var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function() {
-           if (this.readyState == 4 && this.status == 200) {
+           if (this.readyState === 4 && this.status === 200) {
                var logements = JSON.parse(this.responseText);
                logements.forEach(function(logement) {
 
@@ -27,8 +32,12 @@
                                '<br/><b>Prix</b> :' + logement.price + '€' +
                                '<br /><b>Nombre de voyageurs max. : </b>' + logement.nbMaxVoyager +
                                '<br/><b>Nombre de pièces: </b>' + logement.nbRoom +
-                               '<br/><b>Réserver:</b>'+calendar.outerHTML).on('click', function(){
+                               '<br/><b>Réserver:</b>'+calendar.outerHTML)
+
+                           .on('click', function(){
                                     var calendarInput = document.querySelector("#"+calendarId);
+                                    $("#dates").empty();
+                                    document.getElementById("dates").append(calendarInput);
                                     var datepicker = new HotelDatepicker(calendarInput);
                        });
                });
