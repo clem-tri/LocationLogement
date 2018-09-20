@@ -1,0 +1,19 @@
+.starter-template {
+  padding: 15rem 1.5rem;
+  text-align: center;
+}
+.starter-template h1{
+ color:#fff;
+ text-shadow: black 2px 5px;
+}
+body{
+  padding-top: 5rem;
+  background-image: url("background.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+nav .navbar{
+  background-color: #28a745;
+  border: 2px solid #19672b;
+}
