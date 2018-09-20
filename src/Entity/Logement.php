@@ -56,6 +56,25 @@ class Logement
      */
     private $nbRoom;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $img;
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): self
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -158,4 +177,6 @@ class Logement
 
         return $this;
     }
+
+
 }
