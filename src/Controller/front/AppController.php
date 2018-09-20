@@ -26,7 +26,7 @@ class AppController extends AbstractController
      */
     public function map(Request $request): Response
     {
-        return $this->render('map.html.twig', []);
+        return $this->render('app/map.html.twig', []);
     }
 
     /**

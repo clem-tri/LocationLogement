@@ -1,22 +1,21 @@
-{% extends 'header.html.twig' %}
-
-
+{% include 'header.html.twig' %}
 {% block body %}
-<main role="main" class="inner cover">
-        <!--<h1 class="cover-heading">Bienvenue</h1>-->
-        <h1 class="cover-heading">Vous êtes à la recherche d'une location ? </h1><br>
-        <form  class="form-group">
-        <input  class="form-control" type="search">
-        <p class="form-group"><br>
-          <a href="/map" class="btn btn-lg btn-secondary">Trouver</a>
-        </p>
-        </form>
-      </main>
+    <body class="home">
 
+    <main role="main" class="container">
 
+        <div class="starter-template">
+            <h1>Vous êtes à la recherche d'une location ? </h1><br>
+            <form  class="form-group">
+                <input class="col-md-8 offset-2 form-control" type="search">
+                <p class="form-group"><br>
+                    <a href="/map" class="btn btn-lg btn-success">Trouver</a>
+                </p>
+            </form>
+        </div>
 
+    </main>
 
-{% endblock %}
-{% block footer %}
-{% include 'footer.html.twig' %}
+    </body>
+
 {% endblock %}

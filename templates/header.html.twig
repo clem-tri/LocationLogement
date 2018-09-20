@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
-    <title>LocationLogement</title>
-
+    <title>Location Logement</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -19,47 +17,37 @@
             crossorigin="">
 
     </script>
+    <script src="{{ asset('js/fecha.js') }}"></script>
+    <script src="{{ asset('js/hotel-datepicker.js') }}"></script>
 
 
-     {# CSS #}
+    {# CSS #}
     <link href="{{ asset('css/hotel-datepicker.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
-    <link href="{{ asset('css/cover.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 </head>
 
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top">
+    <a class="navbar-brand" href="{{ path('home') }}">LogementLocation</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-
-<div class="cover-container d-flex h-100 p-3 flex-column">
-    <header class="masthead mb-auto">
-        <div class="inner">
-            <h3 class="masthead-brand"><a href="{{ path('home') }}">LocationLogement</a></h3>
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link" href="{{ path('map') }}">Map</a>
-                {% if app.user %}
-                    <a class="nav-link"><span>{{ app.user.email }}</span></a>
-                {% else %}
-                    <a class="nav-link" href="{{ path('login') }}">Connexion</a>
-                    <a class="nav-link" href="{{ path('app_front_registration_register') }}">Inscription</a>
-                {% endif %}
-
-            </nav>
-        </div>
-    </header>
-    <body>
-    {% block body %}
-    {% endblock %}
-
-    <script src="{{ asset('js/fecha.js') }}"></script>
-    <script src="{{ asset('js/hotel-datepicker.js') }}"></script>
-
-    </body>
-     {% block footer %}
-    {% endblock %}
-</div>
-
-
-
-</html>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('map') }}">Carte</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav form-inline my-2 my-lg-0">
+            {% if app.user %}
+                <a class="nav-link"><span>{{ app.user.email }}</span></a>
+            {% else %}
+                <a class="nav-link" href="{{ path('login') }}">Connexion</a>
+                <a class="nav-link" href="{{ path('app_front_registration_register') }}">Inscription</a>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
