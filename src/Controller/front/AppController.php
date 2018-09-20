@@ -28,4 +28,9 @@ class AppController extends AbstractController
     {
         return $this->render('map.html.twig', []);
     }
+
+    /**
+     * @Route("/profile", name="profile")
+     *
+     */
 }

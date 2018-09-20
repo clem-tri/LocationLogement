@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
 /**
- * Brand controller.
+ * Api Logement controller.
  *
  * @Route("/api")
  */
