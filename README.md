@@ -23,8 +23,6 @@ http://localhost:8000/
 
 ## Information sur le projet
 
-### Structure Base de données
-
 Clément.T: Gestion de l’api + lien entre front et api + calendrier + réservation
 
 Vincenzo.D: Gestion base de données + front
