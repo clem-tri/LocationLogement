@@ -21,3 +21,14 @@ Le projet à pour but de mettre en place une application permmettant de voir les
 
 http://localhost:8000/
 
+## Information sur le projet
+
+### Structure Base de données
+
+Clément.T: Gestion de l’api + lien entre front et api + calendrier + réservation
+
+Vincenzo.D: Gestion base de données + front
+
+Nicolas.S: Gestion du front + style + map + formulaire de recherche
+
+
