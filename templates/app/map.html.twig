@@ -5,17 +5,25 @@
   <form  method="POST" action="/map" class="form-group row">
       <input class="col-md-7 offset-1 form-control" name="search" id="search2" type="search">
 
-          <input type="submit" class="form-control col-md-3 btn btn-lg btn-success" value="Trouver" style="padding-top:4px;">
 
-  </form>
 
-<div id="mapid"></div>
+                <input type="submit" class="form-control col-md-3 btn btn-lg btn-success" value="Trouver" style="padding-top:4px;">
+
+        </form>
+
+      <div class="container-fluid">
+         <div class="row">
+            <div id="mapid" class="col"></div>
+            <div class="col" id="dates"></div>
+         </div>
+
+</div>
 
 
    <script type="application/javascript">
        var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function() {
-           if (this.readyState == 4 && this.status == 200) {
+           if (this.readyState === 4 && this.status === 200) {
                var logements = JSON.parse(this.responseText);
                logements.forEach(function(logement) {
 
@@ -33,8 +41,12 @@
                                '<br/><b>Prix</b> :' + logement.price + '€' +
                                '<br /><b>Nombre de voyageurs max. : </b>' + logement.nbMaxVoyager +
                                '<br/><b>Nombre de pièces: </b>' + logement.nbRoom +
-                               '<br/><b>Réserver:</b>'+calendar.outerHTML).on('click', function(){
+                               '<br/><b>Réserver:</b>'+calendar.outerHTML)
+
+                           .on('click', function(){
                                     var calendarInput = document.querySelector("#"+calendarId);
+                                    $("#dates").empty();
+                                    document.getElementById("dates").append(calendarInput);
                                     var datepicker = new HotelDatepicker(calendarInput);
                        });
                });
