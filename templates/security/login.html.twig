@@ -1,7 +1,7 @@
-{% extends 'base.html.twig' %}
+{% include 'header.html.twig' %}
 
 {% block body %}
-
+<body class="home">
     {% if error %}
         <div class="alert alert-danger">
             <ul class="list-unstyled mb-0">
@@ -12,4 +12,5 @@
         </div>
     {% endif %}
     {{form(form)}}
+  </body>
 {% endblock %}
