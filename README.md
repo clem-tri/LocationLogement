@@ -12,5 +12,5 @@ Le projet à pour but de mettre en place une application permmettant de voir les
 ### Installation
 
  Avec un invité de commande se mettre à la racine du projet et executer
- 'composer install'
+ '''composer install'''
  
