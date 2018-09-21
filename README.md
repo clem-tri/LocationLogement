@@ -11,6 +11,13 @@ Le projet à pour but de mettre en place une application permmettant de voir les
  
 ### Installation
 
- Avec un invité de commande se mettre à la racine du projet et executer
- `composer install`
+ * Executer la commande à l racine du projet `composer install`
+ * Aller dans le fichier `.env`et modifier les lignes DATABASES pour avoir `DATABASE_URL=mysql://root:@127.0.0.1:3306/logement`
+ * Excuter la commande à la racine du projet `php bin/console doctrine:schema:create`
+ * Puis `php bin/console server:run`
+ * Importer le fichier sql joint au projet dans votre base de données créer précédemment
  
+### Lancer le projet
+
+http://localhost:8000/
+
