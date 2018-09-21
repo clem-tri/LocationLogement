@@ -6,10 +6,10 @@
 
         <div class="starter-template">
             <h1>Vous êtes à la recherche d'une location ? </h1><br>
-            <form  class="form-group">
-                <input class="col-md-8 offset-2 form-control" type="search">
+            <form  method="POST" action="/map" class="form-group">
+                <input class="col-md-8 offset-2 form-control" name="search" id="search" type="search">
                 <p class="form-group"><br>
-                    <a href="/map" class="btn btn-lg btn-success">Trouver</a>
+                    <input type="submit" class="btn btn-lg btn-success" value="Trouver">
                 </p>
             </form>
         </div>

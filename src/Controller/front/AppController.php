@@ -26,11 +26,25 @@ class AppController extends AbstractController
      */
     public function map(Request $request): Response
     {
-        return $this->render('app/map.html.twig', []);
+
+        //$search = $_POST['search'];
+        //var_dump($request->getSession());
+
+
+        $result = $request->request->get('search');
+        $coords = [2.2770205, 48.8589507];
+        if($result){
+          $url = "https://photon.komoot.de/api/?q=$result&limit=5&lang=fr";
+          $content = json_decode(file_get_contents($url));
+          $coords = $content->features[0]->geometry->coordinates;
+        }
+
+
+        return $this->render('app/map.html.twig', [
+          'coords' => $coords
+        ]);
     }
 
-    /**
-     * @Route("/profile", name="profile")
-     *
-     */
+
+
 }
