@@ -6,45 +6,144 @@
 <div class="container-fluid">
    <div class="row">
       <div id="mapid" class="col"></div>
-      <div class="col" id="dates"></div>
+      <div class="col" id="dates">
+      </div>
    </div>
 
 </div>
 
 
    <script type="application/javascript">
+
+      var user = "{{ app.user ? 'true' : 'false' }}";
+
        var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function() {
            if (this.readyState === 4 && this.status === 200) {
                var logements = JSON.parse(this.responseText);
                logements.forEach(function(logement) {
 
+                   // input calendar
                   var calendarId = "calendar"+logement.id;
                   var calendar = document.createElement('input');
                   calendar.id = calendarId;
+                  calendar.className = "form-control";
+                  calendar.placeholder = "Vos dates de réservation";
+
+                  // input nb personne
+                   var nbPersonneInput = document.createElement('input');
+                   nbPersonneInput.id = "nbPersonne-"+logement.id;
+                   nbPersonneInput.className = "form-control mb-2";
+                   nbPersonneInput.placeholder = "Nombre de personne";
+                   nbPersonneInput.type = "number";
+                   nbPersonneInput.value = "1";
+                   nbPersonneInput.min = "1";
+                   nbPersonneInput.max = logement.nbMaxVoyager;
 
 
+                  // button réserver
+                  var reserverButton = document.createElement('button');
+                  reserverButton.id= "reservation";
+                  reserverButton.textContent = "Réserver";
+                  reserverButton.className = "btn btn-success";
+
+
+
+                     // popup
                        L.marker([logement.coorX, logement.coorY]).addTo(mymap)
                            .bindPopup('<b>' +
                                logement.name +
                                '</b><br />' +
-                               '<img src="img/'+logement.description+'"/>'+
+                               '<img src="img/'+logement.img+'"/>'+
                                logement.description +
                                '<br/><b>Prix</b> :' + logement.price + '€' +
                                '<br /><b>Nombre de voyageurs max. : </b>' + logement.nbMaxVoyager +
                                '<br/><b>Nombre de pièces: </b>' + logement.nbRoom +
-                               '<br/><b>Réserver:</b>'+calendar.outerHTML)
+                                 calendar.outerHTML)
 
                            .on('click', function(){
-                                    var calendarInput = document.querySelector("#"+calendarId);
-                                    $("#dates").empty();
-                                    document.getElementById("dates").append(calendarInput);
-                                    var datepicker = new HotelDatepicker(calendarInput);
+                                 // ajout du calendrier et du bouton réserver
+                               var calendarInput = document.querySelector("#"+calendarId);
+                               var datesDiv = $("#dates");
+
+                               datesDiv.empty();
+                               datesDiv.append(calendarInput);
+                               datesDiv.append(nbPersonneInput);
+                               datesDiv.append(reserverButton);
+                               reserverButton.disabled =true;
+                                    var datepicker = new HotelDatepicker(calendarInput, {
+                                        i18n : {
+                                          selected: 'Votre séjour:',
+                                          night: 'Nuit',
+                                          nights: 'Nuits',
+                                          button: 'Fermer',
+                                          'checkin-disabled': 'Check-in désactivé',
+                                          'checkout-disabled': 'Check-out désactivé',
+                                          'day-names-short': ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                                          'day-names': ['Dimanche', 'Lundì', 'Mardì', 'Mercredì', 'Jeudì', 'Vendredì', 'Samedi'],
+                                          'month-names-short': ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jui', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                          'month-names': ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                                          'error-more': 'L\'intervalle entre les dates ne doit pas être de plus d\'une nuit',
+                                          'error-more-plural': 'L\'intervalle entre les dates ne doit pas être de plus de %d nuit(s)',
+                                          'error-less': 'L\'intervalle entre les dates ne doit pas être de moins d\'une nuit',
+                                          'error-less-plural': 'L\'intervalle entre les dates ne doit pas être de moins %d nuit(s)',
+                                          'info-more': 'Sélectionnez une intervalle de date de plus d\'une nuit',
+                                          'info-more-plural': 'Sélectionnez une intervalle de dates de plus de %d nuit(s)',
+                                          'info-range': 'Sélectionnez une intervalle de dates entre %d et %d nuits',
+                                          'info-default': 'Veuillez sélectionner deux dates'
+                               }
+                                    });
+
+                                    calendarInput.addEventListener('afterClose', function () {
+                                        if(datepicker.getValue() !== "" ) {
+                                            if(user == "true"){
+                                                reserverButton.disabled = false;
+                                            }
+                                            else
+                                            {
+                                                $('#dates').append('<div class="alert alert-warning" role="alert">Veuillez vous connecter pour réserver.</div>');
+
+
+                                            }
+
+                                        }
+                                    }, true);
+
+                               reserverButton.addEventListener('click', function(){
+
+                                   var user = "{{ app.user }}";
+                                   var userId = user ? user.id : "";
+
+
+                                   xmlhttp.open("POST", "/api/location", true);
+                                   //Send the proper header information along with the request
+                                   xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                                   var params = 'logement_id='+logement.id+
+                                       '&user_id='+ userId  +
+                                       '&dt_st_location='+datepicker.getValue().substring(0,10)+
+                                       '&dt_end_location='+datepicker.getValue().substring(13,23)+
+                                       '&nb_voyager='+$("#nbPersonne-"+logement.id).val();
+
+                                   xmlhttp.send(params);
+
+                                   xmlhttp.onreadystatechange = function()
+                                   {
+                                       if (xmlhttp.readyState === 4 && xmlhttp.status === 201)
+                                       {
+                                           $('#dates').append('<div class="alert alert-success" role="alert">Réservation effectuée avec succès.</div>');
+                                       }
+                                   }
+
+                               });
                        });
+
+
                });
 
            }
        };
+
+
        xmlhttp.open("GET", "/api/logements", true);
        xmlhttp.send();
 
@@ -59,8 +158,6 @@
                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
            id: 'mapbox.streets'
        }).addTo(mymap);
-
-       var popup = L.popup();
 
 
 
