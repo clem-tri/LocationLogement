@@ -75,6 +75,34 @@
                                datesDiv.empty();
                                datesDiv.append(calendarInput);
                                datesDiv.append(nbPersonneInput);
+                               if(user === "true"){
+                                   reserverButton.addEventListener('click', function(){
+
+                                       var user = "{{ app.user ? app.user.id : "" }}";
+                                       var userId = user ? user.id : "";
+
+
+                                       xmlhttp.open("POST", "/api/location", true);
+                                       //Send the proper header information along with the request
+                                       xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                                       var params = 'logement_id='+logement.id+
+                                           '&user_id='+ userId +
+                                           '&dt_st_location='+datepicker.getValue().substring(0,10)+
+                                           '&dt_end_location='+datepicker.getValue().substring(13,23)+
+                                           '&nb_voyager='+$("#nbPersonne-"+logement.id).val();
+
+                                       xmlhttp.send(params);
+
+                                       xmlhttp.onreadystatechange = function()
+                                       {
+                                           if (xmlhttp.readyState === 4 && xmlhttp.status === 201)
+                                           {
+                                               $('#dates').append('<div class="alert alert-success" role="alert">Réservation effectuée avec succès.</div>');
+                                           }
+                                       }
+
+                                   });
+                               }
                                datesDiv.append(reserverButton);
                                reserverButton.disabled =true;
                                     var datepicker = new HotelDatepicker(calendarInput, {
@@ -102,7 +130,7 @@
 
                                     calendarInput.addEventListener('afterClose', function () {
                                         if(datepicker.getValue() !== "" ) {
-                                            if(user == "true"){
+                                            if(user === "true"){
                                                 reserverButton.disabled = false;
                                             }
                                             else
@@ -117,7 +145,7 @@
 
                                reserverButton.addEventListener('click', function(){
 
-                                   var user = "{{ app.user }}";
+                                   var user = "{{ app.user ? app.user.id : 1 }}";
                                    var userId = user ? user.id : "";
 
 
@@ -125,7 +153,7 @@
                                    //Send the proper header information along with the request
                                    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                                    var params = 'logement_id='+logement.id+
-                                       '&user_id='+ userId  +
+                                       '&user_id='+ userId +
                                        '&dt_st_location='+datepicker.getValue().substring(0,10)+
                                        '&dt_end_location='+datepicker.getValue().substring(13,23)+
                                        '&nb_voyager='+$("#nbPersonne-"+logement.id).val();
